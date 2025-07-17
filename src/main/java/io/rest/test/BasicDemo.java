@@ -23,10 +23,22 @@ public class BasicDemo {
        System.out.println("Place id ="+place_id);
 
        //Update the place with new address
+        String newAddress = "70 Summer walk, USA";
         RestAssured.given().log().all()
                 .queryParam("key", "qaclick123").header("Content-Type", "application/json")
-                .body(UpdateAddress.addressUpdate(place_id)).when().put("/maps/api/place/update/json")
+                .body(UpdateAddress.addressUpdate(place_id,newAddress)).when().put("/maps/api/place/update/json")
                 .then().log().all().assertThat().statusCode(200).body("msg",equalTo("Address successfully updated"));
+
+        //Get Details.
+        String getrResponse=RestAssured.given().log().all().queryParam("key","qaclick123")
+                .queryParam("place_id",place_id).when().get("/maps/api/place/get/json")
+                .then().assertThat().statusCode(200).extract().asString();
+        System.out.println(getrResponse);
+
+        JsonPath jp1 = new JsonPath(getrResponse);
+        String actualAddress = jp1.get("address");
+        System.out.println("Actual Address = "+actualAddress);
+
 
     }
 
