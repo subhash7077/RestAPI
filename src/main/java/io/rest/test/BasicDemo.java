@@ -2,9 +2,11 @@ package io.rest.test;
 
 import io.jasonfiles.Payload;
 import io.jasonfiles.UpdateAddress;
+import io.parser.JsonParser;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
+import org.testng.Assert;
 
 import static io.restassured.path.json.JsonPath.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -18,7 +20,8 @@ public class BasicDemo {
                 .then().assertThat().statusCode(200).body("scope",equalTo("APP")).extract().asString();
         System.out.println(response);
 
-        JsonPath jp = new JsonPath(response);
+        //JsonPath jp = new JsonPath(response);
+        JsonPath jp=JsonParser.parserJson(response);
        String place_id= jp.get("place_id");
        System.out.println("Place id ="+place_id);
 
@@ -38,6 +41,9 @@ public class BasicDemo {
         JsonPath jp1 = new JsonPath(getrResponse);
         String actualAddress = jp1.get("address");
         System.out.println("Actual Address = "+actualAddress);
+
+        //Testng
+        Assert.assertEquals(actualAddress, newAddress, "Address is not matching");
 
 
     }
