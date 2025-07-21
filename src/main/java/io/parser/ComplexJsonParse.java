@@ -39,14 +39,6 @@ public class ComplexJsonParse {
         }
 
         //Verify if Sum of all Course prices matches with Purchase Amount
-        for (int i=0;i<courseCount;i++){
-            String title=jp.getString("courses["+i+"].title");
-            if (title.equalsIgnoreCase("rpa")){
-                int rpaCopies= jp.getInt("courses["+i+"].copies");
-                System.out.println("No of copies sold by "+title+" Course: " + rpaCopies);
-                break;
-            }
-        }
         VerifySum.sumOfcourse();
         System.out.println("Sum of all course prices matches with Purchase Amount");
     }
