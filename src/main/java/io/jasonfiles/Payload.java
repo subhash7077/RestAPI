@@ -76,4 +76,12 @@ public class Payload {
                  "}\n";
             return response;
      }
+
+    public static String deleteBook(String id) {
+        String response="{\n" +
+                "\n" +
+                "\"ID\":\""+id+"\"\n" +
+                "}\n";
+        return response;
+    }
 }
